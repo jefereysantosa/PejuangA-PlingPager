@@ -1,0 +1,27 @@
+<?php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class StoreProfile extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'store_name',
+        'bank_name',
+        'account_number',
+        'account_owner_name',
+        'meta_phone_number_id',
+        'meta_waba_id',
+        'meta_access_token',
+    ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}
