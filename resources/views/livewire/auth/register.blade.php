@@ -30,6 +30,16 @@
                 placeholder="email@example.com"
             />
 
+            <!-- Store Name -->
+            <flux:input
+                name="store_name"
+                :label="__('Store name')"
+                :value="old('store_name')"
+                type="text"
+                required
+                :placeholder="__('Kedai Anda')"
+            />
+
             <!-- Password -->
             <flux:input
                 name="password"
