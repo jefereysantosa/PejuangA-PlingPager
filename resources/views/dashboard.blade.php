@@ -25,6 +25,27 @@
             </div>
         @endif
 
+        {{-- Cashier Store & Profile Bar --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 shadow-xs">
+            <div class="flex items-center gap-3">
+                <div class="flex size-10 items-center justify-center rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+                    <flux:icon.building-storefront class="size-5" />
+                </div>
+                <div>
+                    <h3 class="font-bold text-zinc-900 dark:text-white">
+                        {{ auth()->user()->storeProfile?->store_name ?? auth()->user()->name . "'s Kedai" }}
+                    </h3>
+                    <p class="text-xs text-zinc-500">
+                        {{ auth()->user()->storeProfile?->bank_name ? auth()->user()->storeProfile->bank_name . ' - ' . auth()->user()->storeProfile->account_number . ' (' . auth()->user()->storeProfile->account_owner_name . ')' : 'Rekening bank belum diatur' }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <livewire:cashier.profile-editor />
+            </div>
+        </div>
+
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
                 <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
