@@ -2,6 +2,13 @@
 
 use App\Livewire\Auth\StoreSetup;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Cashier\OrderList;
+use App\Livewire\Cashier\OrderTaker;
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/cashier/pos', OrderTaker::class)->name('cashier.pos');
+    Route::get('/cashier/orders', OrderList::class)->name('cashier.orders');
+});
 
 Route::view('/', 'welcome')->name('home');
 

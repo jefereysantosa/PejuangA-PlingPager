@@ -18,6 +18,12 @@
                     <flux:sidebar.item icon="building-storefront" :href="route('store.edit')" :current="request()->routeIs('store.edit')" wire:navigate>
                         {{ __('Store Setup') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="shopping-cart" :href="route('cashier.pos')" :current="request()->routeIs('cashier.pos')" wire:navigate>
+                        {{ __('POS Kasir') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="queue-list" :href="route('cashier.orders')" :current="request()->routeIs('cashier.orders')" wire:navigate>
+                        {{ __('Antrean Pesanan') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
