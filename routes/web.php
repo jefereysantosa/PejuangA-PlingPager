@@ -1,8 +1,14 @@
 <?php
 
+use App\Livewire\Auth\StoreSetup;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    Route::livewire('store-setup', StoreSetup::class)->name('store.setup');
+    Route::livewire('onboarding', StoreSetup::class)->name('onboarding');
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');

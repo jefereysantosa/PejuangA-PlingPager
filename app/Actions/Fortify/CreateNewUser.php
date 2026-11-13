@@ -17,7 +17,7 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             ...$this->profileRules(),
-            'store_name' => ['required', 'string', 'max:255'],
+            'store_name' => ['nullable', 'string', 'max:255'],
             'password' => $this->passwordRules(),
         ])->validate();
 
@@ -28,8 +28,10 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => $input['password'],
             ]);
 
+            $storeName = !empty($input['store_name']) ? trim((string) $input['store_name']) : ($user->name . "'s Store");
+
             $user->storeProfile()->create([
-                'store_name' => $input['store_name'],
+                'store_name' => $storeName,
             ]);
 
             return $user;

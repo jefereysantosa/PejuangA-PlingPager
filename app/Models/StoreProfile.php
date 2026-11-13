@@ -24,4 +24,14 @@ class StoreProfile extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function isMetaConfigured(): bool
+    {
+        return !empty($this->meta_phone_number_id) && !empty($this->meta_access_token);
+    }
+
+    public function isComplete(): bool
+    {
+        return !empty($this->store_name) && $this->isMetaConfigured();
+    }
 }

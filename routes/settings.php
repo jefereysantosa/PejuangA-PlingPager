@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Auth\StoreSetup;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Security;
@@ -9,6 +10,7 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
     Route::livewire('settings/profile', Profile::class)->name('profile.edit');
+    Route::livewire('settings/store', StoreSetup::class)->name('store.edit');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
