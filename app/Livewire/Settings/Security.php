@@ -135,5 +135,4 @@ class Security extends Component
         $this->deletingPasskeyId = null;
         $this->deletingPasskeyName = '';
     }
-
 }
