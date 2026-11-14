@@ -12,6 +12,7 @@ class StoreProfile extends Model
     protected $fillable = [
         'user_id',
         'store_name',
+        'is_open',
         'bank_name',
         'account_number',
         'account_owner_name',
@@ -19,6 +20,13 @@ class StoreProfile extends Model
         'meta_waba_id',
         'meta_access_token',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_open' => 'boolean',
+        ];
+    }
 
     public function user(): BelongsTo
     {

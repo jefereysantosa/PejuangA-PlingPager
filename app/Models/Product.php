@@ -15,8 +15,18 @@ class Product extends Model
         'name',
         'category',
         'price',
+        'description',
         'is_available',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'price' => 'integer',
+            'is_available' => 'boolean',
+            'description' => 'string',
+        ];
+    }
 
     public function user(): BelongsTo
     {
