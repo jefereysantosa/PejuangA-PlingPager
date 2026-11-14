@@ -4,6 +4,7 @@ namespace App\Livewire\Cashier;
 
 use App\Models\Order;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -22,7 +23,7 @@ class OrderEditor extends Component
     #[On('open-order-editor')]
     public function loadOrder(int $orderId): void
     {
-        $order = Order::findOrFail($orderId);
+        $order = Order::where('user_id', Auth::id())->findOrFail($orderId);
 
         $this->orderId = $order->id;
         $this->consumerName = $order->customer_name;
@@ -39,7 +40,7 @@ class OrderEditor extends Component
             'status' => ['required', 'in:processing,ready,completed,cancelled'],
         ]);
 
-        $order = Order::findOrFail($this->orderId);
+        $order = Order::where('user_id', Auth::id())->findOrFail($this->orderId);
         $order->update([
             'customer_name' => $this->consumerName,
             'notes' => $this->notes,

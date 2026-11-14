@@ -26,7 +26,9 @@ class OrderTaker extends Component
 
     public function addToCart(int $productId): void
     {
-        $product = Product::findOrFail($productId);
+        $product = Product::where('user_id', Auth::id())
+            ->where('is_available', true)
+            ->findOrFail($productId);
 
         if (isset($this->cart[$productId])) {
             $this->cart[$productId]['qty']++;
@@ -107,6 +109,8 @@ class OrderTaker extends Component
     public function render(): View
     {
         $products = Product::query()
+            ->where('user_id', Auth::id())
+            ->where('is_available', true)
             ->when($this->search, fn ($q) => $q->where('name', 'like', '%'.$this->search.'%'))
             ->orderBy('name')
             ->get();

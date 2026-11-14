@@ -4,6 +4,7 @@ namespace App\Livewire\Cashier;
 
 use App\Models\Order;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -16,7 +17,9 @@ class OrderFinalize extends Component
     #[On('order-created')]
     public function openOrder(int $orderId): void
     {
-        $this->order = Order::with('orderItems.product')->find($orderId);
+        $this->order = Order::with('orderItems.product')
+            ->where('user_id', Auth::id())
+            ->find($orderId);
         $this->showModal = (bool) $this->order;
     }
 

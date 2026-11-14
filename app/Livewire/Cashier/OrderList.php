@@ -4,6 +4,7 @@ namespace App\Livewire\Cashier;
 
 use App\Models\Order;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -19,7 +20,7 @@ class OrderList extends Component
 
     public function markAsReady(int $orderId): void
     {
-        $order = Order::findOrFail($orderId);
+        $order = Order::where('user_id', Auth::id())->findOrFail($orderId);
         $order->update(['status' => 'ready']);
     }
 
@@ -31,6 +32,7 @@ class OrderList extends Component
     public function render(): View
     {
         $orders = Order::with('orderItems.product')
+            ->where('user_id', Auth::id())
             ->when($this->statusFilter === 'active', fn ($q) => $q->where('status', 'processing'))
             ->when($this->statusFilter === 'ready', fn ($q) => $q->where('status', 'ready'))
             ->latest()
