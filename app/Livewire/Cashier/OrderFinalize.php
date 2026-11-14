@@ -9,6 +9,7 @@ use Livewire\Component;
 class OrderFinalize extends Component
 {
     public bool $showModal = false;
+
     public ?Order $order = null;
 
     #[On('order-created')]
@@ -25,12 +26,12 @@ class OrderFinalize extends Component
         }
 
         // Sesuaikan route tracking jika sudah dibuat oleh member lain
-        return url('/track/' . ($this->order->order_number ?? $this->order->id));
+        return url('/track/'.($this->order->order_number ?? $this->order->id));
     }
 
     public function getQrCodeUrlProperty(): string
     {
-        return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' . urlencode($this->trackingUrl);
+        return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='.urlencode($this->trackingUrl);
     }
 
     public function closeModal(): void

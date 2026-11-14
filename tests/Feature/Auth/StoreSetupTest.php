@@ -3,7 +3,6 @@
 namespace Tests\Feature\Auth;
 
 use App\Livewire\Auth\StoreSetup;
-use App\Models\StoreProfile;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;

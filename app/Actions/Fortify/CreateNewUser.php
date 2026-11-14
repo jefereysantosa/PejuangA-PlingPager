@@ -28,7 +28,7 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => $input['password'],
             ]);
 
-            $storeName = !empty($input['store_name']) ? trim((string) $input['store_name']) : ($user->name . "'s Store");
+            $storeName = ! empty($input['store_name']) ? trim((string) $input['store_name']) : ($user->name."'s Store");
 
             $user->storeProfile()->create([
                 'store_name' => $storeName,

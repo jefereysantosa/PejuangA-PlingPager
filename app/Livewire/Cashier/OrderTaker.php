@@ -13,9 +13,11 @@ use Livewire\Component;
 class OrderTaker extends Component
 {
     public string $search = '';
+
     public string $consumerName = '';
+
     public string $notes = '';
-    
+
     /** @var array<int, array{id: int, name: string, price: float|int, qty: int}> */
     public array $cart = [];
 
@@ -77,7 +79,7 @@ class OrderTaker extends Component
         $order = DB::transaction(function () {
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'order_number' => 'ORD-' . strtoupper(Str::random(6)),
+                'order_number' => 'ORD-'.strtoupper(Str::random(6)),
                 'consumer_name' => $this->consumerName,
                 'total_price' => $this->total,
                 'status' => 'pending', // atau 'preparing' sesuai enum di migrasi
@@ -105,7 +107,7 @@ class OrderTaker extends Component
     public function render()
     {
         $products = Product::query()
-            ->when($this->search, fn ($q) => $q->where('name', 'like', '%' . $this->search . '%'))
+            ->when($this->search, fn ($q) => $q->where('name', 'like', '%'.$this->search.'%'))
             ->orderBy('name')
             ->get();
 

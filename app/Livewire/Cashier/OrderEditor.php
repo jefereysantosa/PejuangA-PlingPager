@@ -9,9 +9,13 @@ use Livewire\Component;
 class OrderEditor extends Component
 {
     public bool $showModal = false;
+
     public ?int $orderId = null;
+
     public string $consumerName = '';
+
     public string $notes = '';
+
     public string $status = 'pending';
 
     #[On('open-order-editor')]

@@ -78,7 +78,7 @@ class MobilePager extends Component
 
         $message = "Hi! I'd like to receive order status updates.\n"
             ."Order: {$this->order->order_code}\n"
-            ."Store: ".($this->storeProfile?->store_name ?? 'PlingPager Store')."\n"
+            .'Store: '.($this->storeProfile?->store_name ?? 'PlingPager Store')."\n"
             ."Status: {$this->statusMeta['label']}\n"
             .'Track live: '.route('consumer.pager', $this->order->order_code);
 

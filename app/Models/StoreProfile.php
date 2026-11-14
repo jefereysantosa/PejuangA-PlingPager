@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,11 +36,11 @@ class StoreProfile extends Model
 
     public function isMetaConfigured(): bool
     {
-        return !empty($this->meta_phone_number_id) && !empty($this->meta_access_token);
+        return ! empty($this->meta_phone_number_id) && ! empty($this->meta_access_token);
     }
 
     public function isComplete(): bool
     {
-        return !empty($this->store_name) && $this->isMetaConfigured();
+        return ! empty($this->store_name) && $this->isMetaConfigured();
     }
 }

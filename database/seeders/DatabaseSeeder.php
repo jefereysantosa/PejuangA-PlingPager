@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\StoreProfile;
-use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\StoreProfile;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $bev2 = Product::create(['user_id' => $user->id, 'name' => 'Kopi Susu', 'category' => 'beverage', 'price' => 15000]);
 
         // 4. Create Dummy Orders & Items (To test UI immediately)
-        
+
         // Order 1: Processing
         $order1 = Order::create([
             'user_id' => $user->id,
