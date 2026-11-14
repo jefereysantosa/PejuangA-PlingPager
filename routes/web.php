@@ -9,20 +9,22 @@ use App\Models\Order;
 use App\Models\StoreProfile;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/cashier/pos', OrderTaker::class)->name('cashier.pos');
     Route::get('/cashier/orders', OrderList::class)->name('cashier.orders');
     Route::get('/cashier/menu', MenuManager::class)->name('cashier.menu');
 });
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', function () {
+    return redirect()->route('login');
+})->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::livewire('store-setup', StoreSetup::class)->name('store.setup');
     Route::livewire('onboarding', StoreSetup::class)->name('onboarding');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 });
 
