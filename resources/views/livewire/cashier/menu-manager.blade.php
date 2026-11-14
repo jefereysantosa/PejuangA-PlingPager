@@ -7,43 +7,18 @@
     </div>
 
     {{-- Kartu utama --}}
-    <div class="rounded-[20px] bg-pling-neutral p-4 shadow-xl">
-        {{-- Header toko --}}
-        <div class="flex items-start gap-3">
-            <div class="relative shrink-0">
-                <div class="flex size-14 items-center justify-center rounded-xl bg-zinc-200 text-xl font-extrabold text-pling-secondary">
-                    {{ strtoupper(substr($profile?->store_name ?? auth()->user()->name, 0, 1)) }}
-                </div>
-                <span class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-bold {{ $profile?->is_open ? 'bg-pling-green text-pling-primary' : 'bg-pling-accent text-white' }}">
-                    {{ $profile?->is_open ? 'Open' : 'Closed' }}
-                </span>
-            </div>
-            <div class="min-w-0 flex-1 pt-0.5">
-                <a href="{{ route('store.edit') }}" class="group flex items-center gap-1 text-lg font-extrabold leading-tight text-pling-primary">
-                    <span class="truncate">{{ $profile?->store_name ?? auth()->user()->name }}</span>
-                    <svg class="size-4 shrink-0 text-pling-secondary transition group-hover:text-pling-primary" fill="currentColor"><use href="#i-edit"/></svg>
-                </a>
-                <p class="truncate text-xs font-semibold text-pling-secondary">{{ auth()->user()->name }}</p>
-            </div>
-        </div>
-
-        {{-- Toggle buka/tutup toko --}}
-        <button type="button" wire:click="toggleStore" wire:loading.attr="disabled"
-            class="mt-4 flex w-full items-center gap-2 rounded-full p-1 pr-4 text-sm font-extrabold shadow-sm transition active:scale-[0.99] {{ $profile?->is_open ? 'bg-pling-accent text-white' : 'bg-pling-green text-pling-primary' }}">
-            <span class="flex size-8 items-center justify-center rounded-full bg-pling-secondary text-white">
-                <svg class="size-5 transition-transform duration-300 {{ $profile?->is_open ? 'rotate-180' : '' }}" fill="currentColor"><use href="#i-double-arrow"/></svg>
-            </span>
-            <span class="flex-1 text-center">{{ $profile?->is_open ? 'Close Store' : 'Open Store' }}</span>
-        </button>
+    <div class="rounded-[26px] bg-pling-neutral p-4 sm:p-5 shadow-xl">
+        {{-- Header profil toko & toggle buka/tutup --}}
+        <x-cashier-header :profile="$profile" />
 
         {{-- Tabs --}}
-        <div class="mt-3 grid grid-cols-2 gap-1 rounded-full bg-zinc-200 p-1">
+        <div class="mt-4 grid grid-cols-2 gap-1 rounded-full bg-zinc-200/90 p-1">
             <button type="button" wire:click="$set('activeTab', 'settings')"
-                class="rounded-full py-1.5 text-xs font-bold transition {{ $activeTab === 'settings' ? 'bg-pling-secondary text-white shadow' : 'text-zinc-500 hover:text-pling-primary' }}">
+                class="rounded-full py-2 text-xs font-extrabold transition {{ $activeTab === 'settings' ? 'bg-[#155592] text-white shadow-sm' : 'text-zinc-500 hover:text-[#155592]' }}">
                 Menu Setting
             </button>
             <button type="button" wire:click="$set('activeTab', 'add')"
-                class="rounded-full py-1.5 text-xs font-bold transition {{ $activeTab === 'add' ? 'bg-pling-secondary text-white shadow' : 'text-zinc-500 hover:text-pling-primary' }}">
+                class="rounded-full py-2 text-xs font-extrabold transition {{ $activeTab === 'add' ? 'bg-[#155592] text-white shadow-sm' : 'text-zinc-500 hover:text-[#155592]' }}">
                 Add Menu
             </button>
         </div>

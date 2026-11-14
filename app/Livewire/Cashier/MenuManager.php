@@ -30,6 +30,12 @@ class MenuManager extends Component
 
     public ?int $editingProductId = null;
 
+    #[On('profile-updated')]
+    public function refreshProfile(): void
+    {
+        // Re-renders view with updated profile info
+    }
+
     #[On('product-saved')]
     public function handleProductSaved(bool $isEdit = false): void
     {
