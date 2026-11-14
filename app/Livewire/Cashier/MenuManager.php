@@ -5,6 +5,7 @@ namespace App\Livewire\Cashier;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\StoreProfile;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
@@ -52,7 +53,7 @@ class MenuManager extends Component
         Cache::put('menu-manager:deleted-product:'.$productId, $product->toArray(), now()->addSeconds(30));
         $product->delete();
 
-        flux()->toast(
+        Flux::toast(
             text: '"'.($productName ?: $product->name).'" dihapus.',
             variant: 'warning',
             duration: 8000,
@@ -64,7 +65,7 @@ class MenuManager extends Component
         $data = Cache::pull('menu-manager:deleted-product:'.$productId);
 
         if (! $data) {
-            flux()->toast(text: 'Batas waktu urung sudah habis.', variant: 'danger');
+            Flux::toast(text: 'Batas waktu urung sudah habis.', variant: 'danger');
 
             return;
         }
@@ -73,7 +74,7 @@ class MenuManager extends Component
         $product->setRawAttributes($data, true);
         $product->save();
 
-        flux()->toast(text: '"'.$product->name.'" dikembalikan.', variant: 'success');
+        Flux::toast(text: '"'.$product->name.'" dikembalikan.', variant: 'success');
     }
 
     public function toggleStore(): void
@@ -85,7 +86,7 @@ class MenuManager extends Component
 
         $profile->update(['is_open' => ! $profile->is_open]);
 
-        flux()->toast(
+        Flux::toast(
             text: $profile->is_open ? 'Toko dibuka. Selamat berjualan!' : 'Toko ditutup.',
             variant: $profile->is_open ? 'success' : 'warning',
         );
@@ -96,7 +97,7 @@ class MenuManager extends Component
         $product = Product::where('user_id', Auth::id())->findOrFail($productId);
         $product->update(['is_available' => ! $product->is_available]);
 
-        flux()->toast(
+        Flux::toast(
             text: $product->name.' sekarang '.($product->is_available ? 'tersedia' : 'tidak tersedia').'.',
             variant: $product->is_available ? 'success' : 'warning',
             duration: 2500,

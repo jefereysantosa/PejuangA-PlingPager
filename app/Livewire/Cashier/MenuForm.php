@@ -3,6 +3,7 @@
 namespace App\Livewire\Cashier;
 
 use App\Models\Product;
+use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -79,7 +80,7 @@ class MenuForm extends Component
         }
 
         $this->dispatch('product-saved', isEdit: $this->isEdit);
-        flux()->toast(text: $message, variant: 'success');
+        Flux::toast(text: $message, variant: 'success');
 
         if (! $this->isEdit) {
             $this->reset(['name', 'price', 'description']);
