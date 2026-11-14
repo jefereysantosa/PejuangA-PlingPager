@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/** @use HasFactory<\Illuminate\Database\Eloquent\Factories\Factory<static>> */
 class Product extends Model
 {
     use HasFactory;

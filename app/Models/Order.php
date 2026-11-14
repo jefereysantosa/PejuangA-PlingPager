@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/** @use HasFactory<\Illuminate\Database\Eloquent\Factories\Factory<static>> */
 class Order extends Model
 {
     use HasFactory;
