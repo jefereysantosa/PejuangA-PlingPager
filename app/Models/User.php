@@ -12,12 +12,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\PasskeyUser;
 use Laravel\Fortify\PasskeyAuthenticatable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable, PasskeyAuthenticatable;
 
     protected $fillable = [
         'name',
@@ -27,8 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 
     protected $hidden = [
         'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
         'remember_token',
     ];
 
