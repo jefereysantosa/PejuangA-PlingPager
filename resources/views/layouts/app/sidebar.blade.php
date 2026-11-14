@@ -18,6 +18,9 @@
                     <flux:sidebar.item icon="building-storefront" :href="route('store.edit')" :current="request()->routeIs('store.edit')" wire:navigate>
                         {{ __('Store Setup') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="book-open" :href="route('cashier.menu')" :current="request()->routeIs('cashier.menu')" wire:navigate>
+                        {{ __('Menu Manager') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="shopping-cart" :href="route('cashier.pos')" :current="request()->routeIs('cashier.pos')" wire:navigate>
                         {{ __('POS Kasir') }}
                     </flux:sidebar.item>
