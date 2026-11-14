@@ -50,6 +50,10 @@
             "npm install",
             "npm run build"
         ],
+        "sync": [
+            "@php artisan migrate --force",
+            "@php artisan config:clear"
+        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "@php artisan dev"
