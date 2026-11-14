@@ -3,6 +3,7 @@
 namespace App\Livewire\Cashier;
 
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -15,7 +16,7 @@ class OrderFinalize extends Component
     #[On('order-created')]
     public function openOrder(int $orderId): void
     {
-        $this->order = Order::with('items.product')->find($orderId);
+        $this->order = Order::with('orderItems.product')->find($orderId);
         $this->showModal = (bool) $this->order;
     }
 
@@ -26,12 +27,12 @@ class OrderFinalize extends Component
         }
 
         // Sesuaikan route tracking jika sudah dibuat oleh member lain
-        return url('/track/'.($this->order->order_number ?? $this->order->id));
+        return route('consumer.track', ['orderCode' => $this->order->order_code]);
     }
 
     public function getQrCodeUrlProperty(): string
     {
-        return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='.urlencode($this->trackingUrl);
+        return 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='.urlencode($this->getTrackingUrlProperty());
     }
 
     public function closeModal(): void
@@ -40,7 +41,7 @@ class OrderFinalize extends Component
         $this->order = null;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.cashier.order-finalize');
     }

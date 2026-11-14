@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\StoreProfile;
 use Flux\Flux;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
@@ -116,7 +117,7 @@ class MenuManager extends Component
         $this->editingProductId = null;
     }
 
-    public function render()
+    public function render(): View
     {
         $profile = StoreProfile::where('user_id', Auth::id())->first();
 

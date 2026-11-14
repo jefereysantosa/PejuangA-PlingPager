@@ -22,12 +22,12 @@
                     <div class="flex items-start justify-between gap-2">
                         <div>
                             <div class="flex items-center gap-2">
-                                <flux:heading size="lg">{{ $order->consumer_name }}</flux:heading>
+                                <flux:heading size="lg">{{ $order->customer_name }}</flux:heading>
                                 <flux:badge size="sm" :color="$order->status === 'ready' ? 'green' : 'amber'">
                                     {{ strtoupper($order->status) }}
                                 </flux:badge>
                             </div>
-                            <flux:text class="text-xs">{{ $order->order_number ?? '#' . $order->id }} • {{ $order->created_at->diffForHumans() }}</flux:text>
+                            <flux:text class="text-xs">{{ $order->order_code }} • {{ $order->created_at->diffForHumans() }}</flux:text>
                         </div>
 
                         {{-- Tombol Gear untuk membuka OrderEditor --}}
@@ -36,13 +36,13 @@
 
                     {{-- Daftar Item Pesanan --}}
                     <ul class="mt-4 space-y-1.5 border-t border-zinc-100 pt-3 text-sm dark:border-zinc-800">
-                        @foreach ($order->items as $item)
+                        @foreach ($order->orderItems as $item)
                             <li class="flex justify-between">
                                 <span class="text-zinc-700 dark:text-zinc-300">
                                     {{ $item->quantity }}x {{ $item->product->name ?? 'Produk' }}
                                 </span>
                                 <span class="text-zinc-500">
-                                    Rp {{ number_format($item->subtotal ?? ($item->price * $item->quantity), 0, ',', '.') }}
+                                    Rp {{ number_format($item->price_at_time * $item->quantity, 0, ',', '.') }}
                                 </span>
                             </li>
                         @endforeach

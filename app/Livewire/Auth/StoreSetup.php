@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use Flux\Flux;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Title;
@@ -233,7 +234,7 @@ class StoreSetup extends Component
     /**
      * Render the Livewire component.
      */
-    public function render()
+    public function render(): View
     {
         $view = view('livewire.auth.store-setup');
 

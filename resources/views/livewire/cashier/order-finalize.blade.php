@@ -4,8 +4,8 @@
             <div class="space-y-5 text-center">
                 <div>
                     <flux:badge color="green" size="sm">Pesanan Berhasil Dibuat</flux:badge>
-                    <flux:heading size="xl" class="mt-2">{{ $order->order_number ?? '#' . $order->id }}</flux:heading>
-                    <flux:subheading>Atas nama: <strong>{{ $order->consumer_name }}</strong></flux:subheading>
+                    <flux:heading size="xl" class="mt-2">{{ $order->order_code }}</flux:heading>
+                    <flux:subheading>Atas nama: <strong>{{ $order->customer_name }}</strong></flux:subheading>
                 </div>
 
                 {{-- QR Code Tracking --}}

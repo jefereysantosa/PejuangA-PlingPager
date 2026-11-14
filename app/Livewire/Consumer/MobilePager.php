@@ -4,6 +4,7 @@ namespace App\Livewire\Consumer;
 
 use App\Models\Order;
 use App\Models\StoreProfile;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -38,33 +39,26 @@ class MobilePager extends Component
     #[Computed]
     public function storeProfile(): ?StoreProfile
     {
-        return StoreProfile::where('user_id', $this->order->user_id)->first();
+        return $this->findStoreProfile();
     }
 
     #[Computed]
     public function subtotal(): int
     {
-        return (int) $this->order->orderItems->sum(
-            fn ($item) => $item->price_at_time * $item->quantity
-        );
+        return $this->calculateSubtotal();
     }
 
     #[Computed]
     public function grandTotal(): int
     {
-        return $this->subtotal + self::PLATFORM_FEE;
+        return $this->calculateSubtotal() + self::PLATFORM_FEE;
     }
 
+    /** @return array{label: string, class: string, step: int} */
     #[Computed]
     public function statusMeta(): array
     {
-        return match ($this->order->status) {
-            'processing' => ['label' => 'On Process', 'class' => 'bg-pling-accent text-white', 'step' => 2],
-            'ready' => ['label' => 'Ready to Pickup', 'class' => 'bg-pling-green text-pling-primary', 'step' => 3],
-            'completed' => ['label' => 'Completed', 'class' => 'bg-pling-primary text-white', 'step' => 3],
-            'cancelled' => ['label' => 'Cancelled', 'class' => 'bg-zinc-300 text-zinc-700', 'step' => 0],
-            default => ['label' => ucfirst($this->order->status), 'class' => 'bg-pling-secondary text-white', 'step' => 1],
-        };
+        return $this->buildStatusMeta();
     }
 
     #[Computed]
@@ -78,14 +72,37 @@ class MobilePager extends Component
 
         $message = "Hi! I'd like to receive order status updates.\n"
             ."Order: {$this->order->order_code}\n"
-            .'Store: '.($this->storeProfile?->store_name ?? 'PlingPager Store')."\n"
-            ."Status: {$this->statusMeta['label']}\n"
+            .'Store: '.($this->findStoreProfile()->store_name ?? 'PlingPager Store')."\n"
+            ."Status: {$this->buildStatusMeta()['label']}\n"
             .'Track live: '.route('consumer.pager', $this->order->order_code);
 
         return 'https://wa.me/'.$number.'?text='.rawurlencode($message);
     }
 
-    public function render()
+    /** @return array{label: string, class: string, step: int} */
+    protected function buildStatusMeta(): array
+    {
+        return match ($this->order->status) {
+            'processing' => ['label' => 'On Process', 'class' => 'bg-pling-accent text-white', 'step' => 2],
+            'ready' => ['label' => 'Ready to Pickup', 'class' => 'bg-pling-green text-pling-primary', 'step' => 3],
+            'completed' => ['label' => 'Completed', 'class' => 'bg-pling-primary text-white', 'step' => 3],
+            'cancelled' => ['label' => 'Cancelled', 'class' => 'bg-zinc-300 text-zinc-700', 'step' => 0],
+        };
+    }
+
+    protected function calculateSubtotal(): int
+    {
+        return (int) $this->order->orderItems->sum(
+            fn ($item) => $item->price_at_time * $item->quantity
+        );
+    }
+
+    protected function findStoreProfile(): ?StoreProfile
+    {
+        return StoreProfile::where('user_id', $this->order->user_id)->first();
+    }
+
+    public function render(): View
     {
         return view('livewire.consumer.mobile-pager');
     }

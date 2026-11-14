@@ -5,6 +5,7 @@ namespace App\Livewire\Cashier;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -79,10 +80,10 @@ class OrderTaker extends Component
         $order = DB::transaction(function () {
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'order_number' => 'ORD-'.strtoupper(Str::random(6)),
-                'consumer_name' => $this->consumerName,
-                'total_price' => $this->total,
-                'status' => 'pending', // atau 'preparing' sesuai enum di migrasi
+                'order_code' => 'ORD-'.strtoupper(Str::random(6)),
+                'customer_name' => $this->consumerName,
+                'total_price' => $this->getTotalProperty(),
+                'status' => 'processing',
                 'notes' => $this->notes,
             ]);
 
@@ -91,8 +92,7 @@ class OrderTaker extends Component
                     'order_id' => $order->id,
                     'product_id' => $item['id'],
                     'quantity' => $item['qty'],
-                    'price' => $item['price'],
-                    'subtotal' => $item['price'] * $item['qty'],
+                    'price_at_time' => $item['price'],
                 ]);
             }
 
@@ -104,7 +104,7 @@ class OrderTaker extends Component
         $this->dispatch('order-created', orderId: $order->id);
     }
 
-    public function render()
+    public function render(): View
     {
         $products = Product::query()
             ->when($this->search, fn ($q) => $q->where('name', 'like', '%'.$this->search.'%'))

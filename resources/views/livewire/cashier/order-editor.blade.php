@@ -11,10 +11,10 @@
             <flux:textarea wire:model="notes" label="Catatan Pesanan" rows="3" placeholder="Tambahkan catatan khusus untuk dapur/barista..." />
 
             <flux:select wire:model="status" label="Status Pesanan">
-                <option value="pending">Pending</option>
-                <option value="preparing">Preparing</option>
+                <option value="processing">Processing</option>
                 <option value="ready">Ready</option>
                 <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
             </flux:select>
 
             <div class="flex justify-end gap-2 pt-2">

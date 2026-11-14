@@ -3,6 +3,7 @@
 namespace App\Livewire\Cashier;
 
 use Flux\Flux;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -143,7 +144,7 @@ class ProfileEditor extends Component
     /**
      * Render the Livewire component.
      */
-    public function render()
+    public function render(): View
     {
         return view('livewire.cashier.profile-editor');
     }

@@ -62,7 +62,7 @@ Route::get('/pager/{orderCode}/receipt.txt', function (string $orderCode) {
     ];
 
     foreach ($order->orderItems as $i => $item) {
-        $lines[] = ($i + 1).'. '.($item->product?->name ?? 'Menu dihapus');
+        $lines[] = ($i + 1).'. '.($item->product->name ?? 'Menu dihapus');
         $lines[] = '   '.$item->quantity.' x Rp '.number_format($item->price_at_time, 0, ',', '.').' = Rp '.number_format($item->price_at_time * $item->quantity, 0, ',', '.');
     }
 

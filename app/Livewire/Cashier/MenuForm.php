@@ -4,6 +4,7 @@ namespace App\Livewire\Cashier;
 
 use App\Models\Product;
 use Flux\Flux;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -79,10 +80,11 @@ class MenuForm extends Component
             $message = '"'.$payload['name'].'" ditambahkan ke menu.';
         }
 
-        $this->dispatch('product-saved', isEdit: $this->isEdit);
+        $isEdit = $this->productId !== null;
+        $this->dispatch('product-saved', isEdit: $isEdit);
         Flux::toast(text: $message, variant: 'success');
 
-        if (! $this->isEdit) {
+        if (! $isEdit) {
             $this->reset(['name', 'price', 'description']);
             $this->category = 'meal';
             $this->isAvailable = true;
@@ -108,7 +110,7 @@ class MenuForm extends Component
         $this->dispatch('product-saved', isEdit: true);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.cashier.menu-form');
     }

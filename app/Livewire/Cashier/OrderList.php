@@ -3,6 +3,7 @@
 namespace App\Livewire\Cashier;
 
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -27,10 +28,10 @@ class OrderList extends Component
         $this->dispatch('open-order-editor', orderId: $orderId);
     }
 
-    public function render()
+    public function render(): View
     {
-        $orders = Order::with('items.product')
-            ->when($this->statusFilter === 'active', fn ($q) => $q->whereIn('status', ['pending', 'preparing']))
+        $orders = Order::with('orderItems.product')
+            ->when($this->statusFilter === 'active', fn ($q) => $q->where('status', 'processing'))
             ->when($this->statusFilter === 'ready', fn ($q) => $q->where('status', 'ready'))
             ->latest()
             ->get();

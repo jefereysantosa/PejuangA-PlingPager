@@ -3,6 +3,7 @@
 namespace App\Livewire\Cashier;
 
 use App\Models\Order;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -16,7 +17,7 @@ class OrderEditor extends Component
 
     public string $notes = '';
 
-    public string $status = 'pending';
+    public string $status = 'processing';
 
     #[On('open-order-editor')]
     public function loadOrder(int $orderId): void
@@ -24,7 +25,7 @@ class OrderEditor extends Component
         $order = Order::findOrFail($orderId);
 
         $this->orderId = $order->id;
-        $this->consumerName = $order->consumer_name;
+        $this->consumerName = $order->customer_name;
         $this->notes = $order->notes ?? '';
         $this->status = $order->status;
         $this->showModal = true;
@@ -35,12 +36,12 @@ class OrderEditor extends Component
         $this->validate([
             'consumerName' => ['required', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:1000'],
-            'status' => ['required', 'in:pending,preparing,ready,completed,cancelled'],
+            'status' => ['required', 'in:processing,ready,completed,cancelled'],
         ]);
 
         $order = Order::findOrFail($this->orderId);
         $order->update([
-            'consumer_name' => $this->consumerName,
+            'customer_name' => $this->consumerName,
             'notes' => $this->notes,
             'status' => $this->status,
         ]);
@@ -49,7 +50,7 @@ class OrderEditor extends Component
         $this->dispatch('order-updated');
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.cashier.order-editor');
     }
